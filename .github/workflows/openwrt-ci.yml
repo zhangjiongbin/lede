@@ -41,6 +41,11 @@ jobs:
           mkdir openwrt-packages
           cd openwrt-packages
           git clone https://github.com/openwrt-develop/luci-theme-atmaterial.git
+          git clone https://github.com/Lienol/openwrt/tree/19.07/package/diy/luci-app-adguardhome.git
+          git clone https://github.com/tty228/luci-app-serverchan.git
+          git clone https://github.com/lxk0301/jd_scripts.git
+          git clone https://github.com/zhangjiongbin/jd_seckill.git
+          git clone https://github.com/qingshuisiyuan/electron-ssr-backup.git
       - name: Update feeds
         run: |
           ./scripts/feeds update -a
@@ -155,11 +160,17 @@ jobs:
           CONFIG_PACKAGE_xupnpd=y
           CONFIG_PACKAGE_coremark=y
           CONFIG_PACKAGE_luci-app-docker=y
+          CONFIG_PACKAGE_luci-app-adguardhome=y
+          CONFIG_PACKAGE_luci-app-serverchan=y
+          CONFIG_PACKAGE_jd_scripts=y
+          CONFIG_PACKAGE_jd_seckill=y
+          CONFIG_PACKAGE_electron-ssr-backup=y
           EOF
           # LuCI主题:
           cat >> .config <<EOF
           CONFIG_PACKAGE_luci-theme-argon=y
           # CONFIG_PACKAGE_luci-theme-netgear=y
+          CONFIG_PACKAGE_luci-theme-atmaterial=y
           EOF
           # 常用软件包:
           cat >> .config <<EOF
