@@ -40,12 +40,18 @@ jobs:
           cd package
           mkdir openwrt-packages
           cd openwrt-packages
+          git clone https://github.com/Hemoth/luci-theme-rosy.git
           git clone https://github.com/openwrt-develop/luci-theme-atmaterial.git
           git clone https://github.com/rufengsuixing/luci-app-adguardhome.git
           git clone https://github.com/tty228/luci-app-serverchan.git
-          git clone https://github.com/lxk0301/jd_scripts.git
-          git clone https://github.com/zhangjiongbin/jd_seckill.git
-          git clone https://github.com/qingshuisiyuan/electron-ssr-backup.git
+          git clone https://github.com/adelolmo/hd-idle.git
+          git clone https://github.com/zhangjiongbin/luci-app-filebrowser.git
+          git clone https://github.com/zhangjiongbin/luci-app-jd-dailybonus.git
+          git clone https://github.com/awesome-openwrt/luci-app-openclash.git
+          git clone https://github.com/awesome-openwrt/luci-app-passwall.git
+          git clone https://github.com/xtaci/kcptun.git
+          git clone https://github.com/zhangjiongbin/luci-app-ssr-plus.git
+          git clone https://github.com/zhangjiongbin/luci-app-autopoweroff.git
       - name: Update feeds
         run: |
           ./scripts/feeds update -a
@@ -120,23 +126,18 @@ jobs:
           EOF
           # 常用LuCI插件选择:
           cat >> .config <<EOF
-          CONFIG_PACKAGE_luci-app-adguardhome=y
           CONFIG_PACKAGE_luci-app-aria2=y
           CONFIG_PACKAGE_luci-app-baidupcs-web=y
           CONFIG_PACKAGE_baidupcs-web=y
           CONFIG_PACKAGE_luci-app-docker=y
           CONFIG_PACKAGE_luci-app-frpc=y
           CONFIG_PACKAGE_luci-app-ddns=y
-          CONFIG_PACKAGE_luci-app-filebrowser=y
-          CONFIG_PACKAGE_luci-i18n-filebrowser-zh-cn=y
           CONFIG_PACKAGE_luci-app-transmission=y
           CONFIG_PACKAGE_luci-app-udpxy=y
-          CONFIG_PACKAGE_luci-app-udpxy=y
-          # CONFIG_PACKAGE_luci-app-hd-idle=y
           CONFIG_PACKAGE_luci-app-kodexplorer=y
           CONFIG_PACKAGE_luci-app-minidlna=y
           CONFIG_PACKAGE_luci-app-openvpn=y
-          # CONFIG_PACKAGE_luci-app-openvpn-server=y
+          CONFIG_PACKAGE_luci-app-openvpn-server=y
           CONFIG_PACKAGE_luci-app-qbittorrent=y
           CONFIG_PACKAGE_luci-app-ssr-plus=y
           CONFIG_PACKAGE_luci-app-ssr-plus_INCLUDE_Kcptun=y
@@ -144,15 +145,11 @@ jobs:
           CONFIG_PACKAGE_luci-app-ssr-plus_INCLUDE_ShadowsocksR_Server=y
           CONFIG_PACKAGE_luci-app-ssr-plus_INCLUDE_ShadowsocksR_Socks=y
           CONFIG_PACKAGE_luci-app-ssr-plus_INCLUDE_V2ray=y
-          CONFIG_PACKAGE_luci-app-=y
           CONFIG_PACKAGE_luci-app-v2ray-server=y
           CONFIG_PACKAGE_luci-app-verysync=y
           CONFIG_PACKAGE_luci-app-webadmin=y
           CONFIG_PACKAGE_luci-app-wireguard=y
           CONFIG_PACKAGE_luci-app-wrtbwmon=y
-          CONFIG_PACKAGE_luci-app-jd-dailybonus=y
-          CONFIG_PACKAGE_luci-app-jd-scripts=y
-          CONFIG_PACKAGE_luci-app-jd-scripts=y
           CONFIG_PACKAGE_python-pip-conf=y
           CONFIG_PACKAGE_luci-app-ssrserver-python=y
           CONFIG_PACKAGE_luci-i18n-ssrserver-python-zh-cn=y
@@ -162,24 +159,89 @@ jobs:
           CONFIG_PACKAGE_luci-app-docker=y
           CONFIG_PACKAGE_luci-app-adguardhome=y
           CONFIG_PACKAGE_luci-app-serverchan=y
-          CONFIG_PACKAGE_jd_scripts=y
-          CONFIG_PACKAGE_jd_seckill=y
-          CONFIG_PACKAGE_electron-ssr-backup=y
+          CONFIG_PACKAGE_luci-app-ttyd=y
+          CONFIG_PACKAGE_luci-i18n-ttyd-zh-cn=y
+          CONFIG_PACKAGE_ttyd=y
+          CONFIG_PACKAGE_luci-lib-docker=y
+          CONFIG_PACKAGE_luci-app-diskman=y
+          CONFIG_PACKAGE_luci-app-ssrserver-python=y
+          CONFIG_PACKAGE_luci-app-usb-printer=y
+          CONFIG_PACKAGE_luci-app-amule=y
+          CONFIG_PACKAGE_amule=y
+          CONFIG_PACKAGE_luci-app-airplay2=y
+          CONFIG_PACKAGE_luci-app-ramfree=y
+          CONFIG_PACKAGE_luci-app-samba4=y
+          CONFIG_PACKAGE_luci-app-filetransfer=y
+          # 其他新增
+          CONFIG_PACKAGE_hd-idle=y
+          CONFIG_PACKAGE_luci-app-hd-idle=y
+          CONFIG_PACKAGE_luci-app-filebrowser=y
+          CONFIG_PACKAGE_luci-i18n-filebrowser-zh-cn=y
+          CONFIG_PACKAGE_luci-app-jd-dailybonus=y
+          CONFIG_PACKAGE_luci-app-openclash=y
+          CONFIG_PACKAGE_luci-app-passwall=y
+          CONFIG_PACKAGE_luci-app-kcptun=y
+          CONFIG_PACKAGE_luci-app-autopoweroff=y
+          # CONFIG_PACKAGE_luci-lib-json
+          # CONFIG_PACKAGE_libjson-c5
+          # CONFIG_PACKAGE_lua-cjson
+          # CONFIG_PACKAGE_luci-app-ssr-mudb-server
+          # CONFIG_PACKAGE_luci-i18n-ssr-mudb-server-zh-cn
+          CONFIG_PACKAGE_luci-app-ssr-plus=y
+          # CONFIG_PACKAGE_shadowsocksr-libev-ssr-local
+          # CONFIG_PACKAGE_shadowsocks-libev-config
+          # CONFIG_PACKAGE_shadowsocks-libev-ss-local
+          # CONFIG_PACKAGE_shadowsocks-libev-ss-redir
+          # CONFIG_PACKAGE_shadowsocks-libev-ss-server
+          # CONFIG_PACKAGE_shadowsocksr-libev-alt
+          # CONFIG_PACKAGE_shadowsocksr-libev-server
+          # CONFIG_PACKAGE_shadowsocksr-libev-ssr-local
+          # CONFIG_PACKAGE_libopenssl-devcrypto
+          # CONFIG_PACKAGE_openvpn-openssl
+          # CONFIG_PACKAGE_shairport-sync-openssl
+          # CONFIG_PACKAGE_nginx-mod-luci
+          # CONFIG_PACKAGE_nginx-ssl
+          # CONFIG_PACKAGE_nginx-ssl-util
+          # CONFIG_PACKAGE_kcptun-client
+          # CONFIG_PACKAGE_mwan3
+          # CONFIG_PACKAGE_luci-app-mwan3
+          # CONFIG_PACKAGE_bash
+          # CONFIG_PACKAGE_lscpu
+          # CONFIG_PACKAGE_kmod-usb-printer
+          # CONFIG_PACKAGE_luci-app-fileassistant
+          # CONFIG_PACKAGE_samba4-admin
+          # CONFIG_PACKAGE_samba4-client
+          # CONFIG_PACKAGE_samba4-libs
+          # CONFIG_PACKAGE_samba4-server
+          # CONFIG_PACKAGE_samba4-utils
+          # CONFIG_PACKAGE_ddns-scripts_cloudflare.com-v4
+          # CONFIG_PACKAGE_ddns-scripts_freedns_42_pl
+          # CONFIG_PACKAGE_ddns-scripts_godaddy.com-v1
+          # CONFIG_PACKAGE_ddns-scripts_no-ip_com
+          # CONFIG_PACKAGE_ddns-scripts_nsupdate
+          # CONFIG_PACKAGE_ddns-scripts_route53-v1
+          # CONFIG_PACKAGE_e2freefrag
+          # CONFIG_PACKAGE_f2fs-tools
+          # CONFIG_PACKAGE_f2fsck
+          # CONFIG_PACKAGE_luci-i18n-autopoweroff-zh-cn
+          # CONFIG_PACKAGE_luci-app-advanced-reboot
+          # CONFIG_PACKAGE_luci-i18n-advanced-reboot-zh-cn
           EOF
           # LuCI主题:
           cat >> .config <<EOF
           CONFIG_PACKAGE_luci-theme-argon=y
           # CONFIG_PACKAGE_luci-theme-netgear=y
           CONFIG_PACKAGE_luci-theme-atmaterial=y
+          CONFIG_PACKAGE_luci-theme-rosy=y
           EOF
           # 常用软件包:
           cat >> .config <<EOF
-          # CONFIG_PACKAGE_curl=y
+          CONFIG_PACKAGE_curl=y
           # CONFIG_PACKAGE_htop=y
-          # CONFIG_PACKAGE_nano=y
-          # CONFIG_PACKAGE_screen=y
-          # CONFIG_PACKAGE_tree=y
-          # CONFIG_PACKAGE_vim-fuller=y
+          CONFIG_PACKAGE_nano=y
+          CONFIG_PACKAGE_screen=y
+          CONFIG_PACKAGE_tree=y
+          CONFIG_PACKAGE_vim-fuller=y
           CONFIG_PACKAGE_wget=y
           EOF
           # 取消编译VMware镜像以及镜像填充 (不要删除被缩进的注释符号):
